@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <TheHeader />
-    <main id="main"></main>
+    <main id="main">
+      <ListaProdutos />
+    </main>
     <TheFooter />
   </div>
 </template>
@@ -9,12 +11,14 @@
 <script>
 import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
+import ListaProdutos from "@/components/ListaProdutos.vue";
 
 export default {
   name: "app",
   components: {
     TheHeader,
-    TheFooter
+    TheFooter,
+    ListaProdutos
   }
 };
 </script>

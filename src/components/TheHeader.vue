@@ -22,7 +22,8 @@ header {
 }
 
 .container {
-  max-width: 930px;
+  max-width: 950px;
+  padding: 0 10px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
