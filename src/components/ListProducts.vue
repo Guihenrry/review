@@ -1,8 +1,10 @@
 <template>
-  <ul v-if="produtos" class="produtos">
-    <li v-for="produto in produtos" :key="produto.id">
-      <img :src="produto.src" :alt="produto.nome" />
-      <h2>{{produto.nome}}</h2>
+  <ul v-if="products" class="produtos">
+    <li v-for="product in products" :key="product.id">
+      <router-link :to="{name: 'home'}">
+        <img :src="product.src" :alt="product.nome" />
+        <h2>{{product.nome}}</h2>
+      </router-link>
     </li>
   </ul>
 </template>
@@ -11,21 +13,38 @@
 import { api } from "@/services.js";
 
 export default {
-  name: "ListaProdutos",
+  name: "ListProducts",
   data() {
     return {
-      produtos: null
+      products: null
     };
   },
+  computed: {
+    url() {
+      const query = this.$route.query;
+      let queryString = "";
+
+      for (let key in query) {
+        queryString += `&${key}=${query[key]}`;
+      }
+
+      return "/produto?" + queryString;
+    }
+  },
+  watch: {
+    url() {
+      this.getProducts();
+    }
+  },
   methods: {
-    getProdutos() {
-      api.get("/produto").then(r => {
-        this.produtos = r.data;
+    getProducts() {
+      api.get(this.url).then(r => {
+        this.products = r.data;
       });
     }
   },
   created() {
-    this.getProdutos();
+    this.getProducts();
   }
 };
 </script>
@@ -40,12 +59,15 @@ export default {
   grid-gap: 30px;
 }
 
+img {
+  padding: 10px;
+}
+
 li {
   background: #fafafa;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
   border-radius: 2px;
-  padding: 10px 10px 30px 10px;
   transition: all 0.3s;
 }
 
@@ -57,7 +79,7 @@ li:hover {
 
 h2 {
   text-align: center;
-  margin: 20px;
+  padding: 10px 10px 20px 10px;
   font-size: 1.125rem;
   font-weight: 400;
 }

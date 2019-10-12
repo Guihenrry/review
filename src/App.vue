@@ -2,7 +2,7 @@
   <div id="app">
     <TheHeader />
     <main id="main">
-      <ListaProdutos />
+      <router-view></router-view>
     </main>
     <TheFooter />
   </div>
@@ -11,14 +11,12 @@
 <script>
 import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
-import ListaProdutos from "@/components/ListaProdutos.vue";
 
 export default {
   name: "app",
   components: {
     TheHeader,
-    TheFooter,
-    ListaProdutos
+    TheFooter
   }
 };
 </script>
@@ -48,6 +46,10 @@ img {
   max-width: 100%;
 }
 
+a {
+  text-decoration: none;
+  color: #0f1417;
+}
 /* GERAL */
 #app {
   min-height: 100vh;
@@ -76,5 +78,21 @@ body {
 
 .btn:hover {
   background: #0880ba;
+}
+
+input,
+textarea {
+  font-family: "Rubik", sans-serif;
+  font-size: 1.125rem;
+  padding: 15px;
+  background: #e7ecee;
+  border: 1px solid #e7ecee;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+input:focus {
+  border: 1px solid #0f1417;
+  outline: none;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <header>
     <div class="container">
-      <a href="/">
+      <router-link :to="{name: 'home'}">
         <img src="@/assets/review.png" alt="Review" />
-      </a>
+      </router-link>
       <button class="btn">Login</button>
     </div>
   </header>
