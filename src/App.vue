@@ -80,6 +80,11 @@ body {
   background: #0880ba;
 }
 
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
 input,
 textarea {
   font-family: "Rubik", sans-serif;
@@ -89,6 +94,8 @@ textarea {
   border: 1px solid #e7ecee;
   border-radius: 5px;
   transition: all 0.3s;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 input:focus {

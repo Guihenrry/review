@@ -5,30 +5,55 @@
         <router-link :to="{name: 'home'}">
           <img src="@/assets/review.png" alt="Review" />
         </router-link>
-        <div>
-          <button class="btn login" @click="showLogin = true">Login</button>
-          <button class="btn" @click="showCadastro = true">Cadastra-se</button>
+        <div v-if="$store.state.login">
+          <span class="user-name">{{name}}</span>
+          <button class="btn" @click="$store.dispatch('signOut')">Sair</button>
+        </div>
+        <div v-else>
+          <button class="btn login" @click="showSignIn = true">Login</button>
+          <button class="btn" @click="showSignUp = true">Cadastra-se</button>
         </div>
       </div>
     </header>
-    <SimpleModal titleModal="Login" v-if="showLogin" @close="showLogin = false"></SimpleModal>
-    <SimpleModal titleModal="Criar Conta" v-if="showCadastro" @close="showCadastro = false"></SimpleModal>
+    <div v-if="! $store.state.login">
+      <SimpleModal v-if="showSignIn" titleModal="Login" @close="showSignIn = false">
+        <SignIn @createAccount="openSignUp" />
+      </SimpleModal>
+      <SimpleModal v-if="showSignUp" titleModal="Criar Conta" @close="showSignUp = false">
+        <SignUp />
+      </SimpleModal>
+    </div>
   </div>
 </template>
 
 <script>
 import SimpleModal from "@/components/SimpleModal.vue";
+import SignIn from "@/components/SignIn.vue";
+import SignUp from "@/components/SignUp.vue";
 
 export default {
   name: "TheHeader",
   data() {
     return {
-      showLogin: false,
-      showCadastro: false
+      showSignIn: false,
+      showSignUp: false
     };
   },
   components: {
-    SimpleModal
+    SimpleModal,
+    SignIn,
+    SignUp
+  },
+  methods: {
+    openSignUp() {
+      this.showSignIn = false;
+      this.showSignUp = true;
+    }
+  },
+  computed: {
+    name() {
+      return this.$store.state.user.name.split(" ")[0];
+    }
   }
 };
 </script>
@@ -53,5 +78,11 @@ header {
 }
 .login:hover {
   color: #0880ba;
+}
+
+.user-name {
+  margin-right: 15px;
+  color: #fff;
+  font-size: 1.125rem;
 }
 </style>

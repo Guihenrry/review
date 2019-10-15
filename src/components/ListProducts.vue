@@ -2,8 +2,8 @@
   <ul v-if="products" class="produtos">
     <li v-for="product in products" :key="product.id">
       <router-link :to="{name: 'home'}">
-        <img :src="product.src" :alt="product.nome" />
-        <h2>{{product.nome}}</h2>
+        <img :src="product.src" :alt="product.name" />
+        <h2>{{product.name}}</h2>
       </router-link>
     </li>
   </ul>
@@ -28,7 +28,7 @@ export default {
         queryString += `&${key}=${query[key]}`;
       }
 
-      return "/produto?" + queryString;
+      return "/products?" + queryString;
     }
   },
   watch: {
