@@ -17,10 +17,10 @@
     </header>
     <div v-if="! $store.state.login">
       <SimpleModal v-if="showSignIn" titleModal="Login" @close="showSignIn = false">
-        <SignIn @createAccount="openSignUp" />
+        <SignIn @createAccount="openSignUp" @closeModal="showSignIn = false" />
       </SimpleModal>
       <SimpleModal v-if="showSignUp" titleModal="Criar Conta" @close="showSignUp = false">
-        <SignUp />
+        <SignUp @closeModal="showSignUp = false" />
       </SimpleModal>
     </div>
   </div>

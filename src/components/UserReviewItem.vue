@@ -1,6 +1,6 @@
 <template>
   <article v-if="review">
-    <button class="btn-edit" @click="$emit('showForm')">Editar</button>
+    <button class="btn-edit" @click="edit">Editar</button>
     <button class="btn-remove" @click="remove">Remover</button>
     <h1>{{review.title}}</h1>
     <p>{{review.text}}</p>
@@ -17,8 +17,19 @@ export default {
   },
   methods: {
     remove() {
-      api.delete(`/review/${this.review.id}`).then(() => {
-        this.$emit("getUserReview");
+      const confirm = window.confirm("Deseja realmente remover está review?");
+
+      if (confirm) {
+        api.delete(`/review/${this.review.id}`).then(() => {
+          this.$emit("getUserReview");
+        });
+      }
+    },
+    edit() {
+      this.$emit("showForm");
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
       });
     }
   }

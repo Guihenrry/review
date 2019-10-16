@@ -4,27 +4,31 @@
       <img :src="product.src" :alt="product.name" />
       <div>
         <h1>{{product.name}}</h1>
-        <p v-if="!login">Entre ou cadastre-se para adicionar sua review</p>
-        <p v-else-if="userReview && !showForm">Você ja adicionou sua review neste produto</p>
-        <button class="btn" v-else-if="!showForm" @click="showForm = true">Adicionar Review</button>
-        <FormReview
-          v-else
-          :productId="product.id"
-          @getUserReview="getUserReview"
-          @closeForm="showForm = false"
-          :userReview="userReview"
-        />
+        <transition mode="out-in">
+          <p v-if="!login">Entre ou cadastre-se para adicionar sua review</p>
+          <p v-else-if="userReview && !showForm">Você ja adicionou sua review neste produto</p>
+          <button class="btn" v-else-if="!showForm" @click="showForm = true">Adicionar Review</button>
+          <FormReview
+            v-else
+            :productId="product.id"
+            @getUserReview="getUserReview"
+            @closeForm="showForm = false"
+            :userReview="userReview"
+          />
+        </transition>
       </div>
     </section>
-    <div>
+
+    <transition-group tag="div" name="list">
       <UserReviewItem
         v-if="userReview"
+        :key="userReview.id"
         :review="userReview"
         @getUserReview="getUserReview"
         @showForm="showForm = true"
       />
       <ReviewItem v-for="review in reviews" :key="review.id" :review="review" />
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -78,6 +82,9 @@ export default {
     login() {
       this.getReviews();
       this.getUserReview();
+      if (!this.login) {
+        this.showForm = false;
+      }
     }
   },
   computed: {
@@ -116,5 +123,17 @@ export default {
 
 .btn:hover {
   background: #124059;
+}
+
+/* TRANSITION GROUP */
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translate3d(-30px, 0, 0);
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s;
 }
 </style>

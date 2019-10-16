@@ -27,7 +27,14 @@ export default {
   },
   methods: {
     logar() {
-      this.$store.dispatch("getUser", this.user.email);
+      this.$store
+        .dispatch("getUser", this.user.email)
+        .then(() => {
+          this.$emit("closeModal");
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
     }
   }
 };
