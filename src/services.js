@@ -10,5 +10,11 @@ export const api = {
   },
   post(endPoint, body) {
     return axiosInstance.post(endPoint, body);
+  },
+  put(endPoint, body) {
+    return axiosInstance.put(endPoint, body);
+  },
+  delete(endPoint) {
+    return axiosInstance.delete(endPoint);
   }
 };
