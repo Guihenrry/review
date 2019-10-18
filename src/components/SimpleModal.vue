@@ -37,6 +37,7 @@ export default {
   height: 100vh;
   background: rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease;
+  padding: 10px;
 }
 
 .modal-container {

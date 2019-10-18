@@ -2,7 +2,7 @@
   <div>
     <header>
       <div class="container">
-        <router-link :to="{name: 'home'}">
+        <router-link class="logo" :to="{name: 'home'}">
           <img src="@/assets/review.png" alt="Review" />
         </router-link>
         <div v-if="$store.state.login">
@@ -17,10 +17,10 @@
     </header>
     <div v-if="! $store.state.login">
       <SimpleModal v-if="showSignIn" titleModal="Login" @close="showSignIn = false">
-        <SignIn @createAccount="openSignUp" @closeModal="showSignIn = false" />
+        <SignIn @createAccount="openSignUp" />
       </SimpleModal>
       <SimpleModal v-if="showSignUp" titleModal="Criar Conta" @close="showSignUp = false">
-        <SignUp @closeModal="showSignUp = false" />
+        <SignUp />
       </SimpleModal>
     </div>
   </div>
@@ -28,6 +28,7 @@
 
 <script>
 import SimpleModal from "@/components/SimpleModal.vue";
+import { mapState } from "vuex";
 import SignIn from "@/components/SignIn.vue";
 import SignUp from "@/components/SignUp.vue";
 
@@ -51,8 +52,17 @@ export default {
     }
   },
   computed: {
+    ...mapState(["login"]),
     name() {
       return this.$store.state.user.name.split(" ")[0];
+    }
+  },
+  watch: {
+    login() {
+      if (this.login) {
+        this.showSignIn = false;
+        this.showSignUp = false;
+      }
     }
   }
 };
@@ -71,6 +81,16 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media screen and (max-width: 350px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .logo {
+    margin: 20px;
+  }
 }
 
 .btn.login {

@@ -59,6 +59,17 @@ export default {
   grid-gap: 30px;
 }
 
+@media screen and (max-width: 650px) {
+  .produtos {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 350px) {
+  .produtos {
+    grid-template-columns: 1fr;
+  }
+}
+
 img {
   padding: 10px;
 }

@@ -110,9 +110,14 @@ export default {
   grid-template-columns: 1fr 1fr;
   margin-bottom: 60px;
 }
+@media screen and (max-width: 650px) {
+  .produto-info {
+    grid-template-columns: 1fr;
+  }
+}
 
 .produto-info h1 {
-  font-size: 4.5rem;
+  font-size: 3rem;
   font-weight: 400;
   margin-bottom: 30px;
 }

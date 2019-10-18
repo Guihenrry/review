@@ -29,9 +29,7 @@ export default {
     logar() {
       this.$store
         .dispatch("getUser", this.user.email)
-        .then(() => {
-          this.$emit("closeModal");
-        })
+        .then(() => {})
         .catch(error => {
           console.log(error.response);
         });

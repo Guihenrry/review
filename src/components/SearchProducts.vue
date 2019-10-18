@@ -26,6 +26,7 @@ export default {
 <style scoped>
 form {
   margin: 60px auto;
+  padding: 0 10px;
   max-width: 400px;
   display: grid;
 }

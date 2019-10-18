@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/"
+  baseURL: "http://localhost/reviewapi/wp-json/api/v1"
 });
 
 export const api = {

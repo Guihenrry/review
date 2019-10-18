@@ -27,10 +27,8 @@ export default {
     },
     edit() {
       this.$emit("showForm");
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      const produtoInfo = document.querySelector(".produto-info");
+      produtoInfo.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 };
