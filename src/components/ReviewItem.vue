@@ -40,6 +40,12 @@ article {
   margin-bottom: 30px;
 }
 
+@media screen and (max-width: 600px) {
+  article {
+    padding: 20px;
+  }
+}
+
 h1 {
   margin-bottom: 10px;
   font-size: 1.5rem;
