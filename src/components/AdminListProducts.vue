@@ -1,13 +1,16 @@
 <template>
-  <ul v-if="products">
-    <li v-for="product in products" :key="product.id">
-      <button class="btn-remove" @click="remove(product.id, $event)">Remover</button>
-      <router-link :to="{name: 'product', params: {id: product.id}}">
-        <img :src="product.images[0].src" :alt="product.name" />
-      </router-link>
-      <h2>{{product.name}}</h2>
-    </li>
-  </ul>
+  <div>
+    <ul v-if="products">
+      <li v-for="product in products" :key="product.id">
+        <button class="btn-remove" @click="remove(product.id, $event)">Remover</button>
+        <router-link :to="{name: 'product', params: {id: product.id}}">
+          <img :src="product.images[0].src" :alt="product.name" />
+        </router-link>
+        <h2>{{product.name}}</h2>
+      </li>
+    </ul>
+    <PageLoading v-else />
+  </div>
 </template>
 
 <script>

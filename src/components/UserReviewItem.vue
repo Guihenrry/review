@@ -21,7 +21,7 @@ export default {
 
       if (confirm) {
         api.delete(`/review/${this.review.id}`).then(() => {
-          this.$emit("getUserReview");
+          this.$emit("getReviews");
         });
       }
     },

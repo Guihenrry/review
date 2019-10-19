@@ -14,6 +14,9 @@ export default {
   components: {
     SearchProducts,
     ListProducts
+  },
+  created() {
+    document.title = "Review";
   }
 };
 </script>

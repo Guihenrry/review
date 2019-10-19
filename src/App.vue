@@ -28,8 +28,8 @@ export default {
         .then(() => {
           this.$store.dispatch("getUser");
         })
-        .catch(error => {
-          window.localStorage.removeItem(token);
+        .catch(() => {
+          window.localStorage.removeItem("token");
         });
     }
   }

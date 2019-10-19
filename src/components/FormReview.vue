@@ -36,28 +36,36 @@ export default {
     }
   },
   methods: {
-    addReview() {
+    addReview({ currentTarget }) {
+      currentTarget.setAttribute("disabled", "");
+      currentTarget.innerText = "Enviando...";
       this.errors = [];
       api
         .post("/review", this.review)
         .then(() => {
           this.$emit("closeForm");
-          this.$emit("getUserReview");
+          this.$emit("getReviews");
         })
         .catch(error => {
           this.errors.push(error.response.data.message);
+          currentTarget.innerText = "Enviar Review";
+          currentTarget.removeAttribute("disabled");
         });
     },
-    updateReview() {
+    updateReview({ currentTarget }) {
+      currentTarget.setAttribute("disabled", "");
+      currentTarget.innerText = "Atualizando...";
       this.errors = [];
       api
         .put(`/review/${this.userReview.id}`, this.review)
         .then(() => {
           this.$emit("closeForm");
-          this.$emit("getUserReview");
+          this.$emit("getReviews");
         })
         .catch(error => {
           this.errors.push(error.response.data.message);
+          currentTarget.innerText = "Atualizar Review";
+          currentTarget.removeAttribute("disabled");
         });
     }
   },

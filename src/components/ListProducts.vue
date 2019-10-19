@@ -8,7 +8,8 @@
         </router-link>
       </li>
     </ul>
-    <p v-else>Busca sem resultados. Tente buscar outro termo</p>
+    <p v-else-if="products && products.length === 0">Busca sem resultados. Tente buscar outro termo</p>
+    <PageLoading v-else />
   </section>
 </template>
 

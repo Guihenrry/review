@@ -2,6 +2,7 @@
   <div class="produto">
     <section class="produto-info">
       <img v-if="product.images" :src="product.images[0].src" :alt="product.name" />
+      <PageLoading v-else />
       <div>
         <h1>{{product.name}}</h1>
         <transition mode="out-in">
@@ -11,7 +12,7 @@
           <FormReview
             v-else
             :productId="product.id"
-            @getUserReview="getUserReview"
+            @getReviews="getReviews"
             @closeForm="showForm = false"
             :userReview="userReview"
           />
@@ -24,10 +25,16 @@
         v-if="userReview"
         :key="userReview.id"
         :review="userReview"
-        @getUserReview="getUserReview"
+        @getReviews="getReviews"
         @showForm="showForm = true"
       />
-      <ReviewItem v-for="review in reviews" :key="review.id" :review="review" />
+
+      <ReviewItem
+        v-for="review in notUserReview"
+        :key="review.id"
+        :review="review"
+        @getReviews="getReviews"
+      />
     </transition-group>
   </div>
 </template>
@@ -55,7 +62,6 @@ export default {
         src: ""
       },
       reviews: null,
-      userReview: null,
       showForm: false
     };
   },
@@ -63,37 +69,43 @@ export default {
     getProduct() {
       api.get(`/product/${this.id}`).then(r => {
         this.product = r.data;
+        document.title = `Ranek | ${this.product.name}`;
       });
     },
     getReviews() {
       api.get(`/review?product_id=${this.id}`).then(r => {
-        this.reviews = r.data.filter(review => review.user_id !== this.user.id);
+        this.reviews = r.data;
       });
-    },
-    getUserReview() {
-      api
-        .get(`/review?product_id=${this.id}&user_id=${this.user.id}`)
-        .then(r => {
-          this.userReview = r.data[0];
-        });
     }
   },
   watch: {
     login() {
       this.getReviews();
-      this.getUserReview();
       if (!this.login) {
         this.showForm = false;
       }
     }
   },
   computed: {
-    ...mapState(["user", "login"])
+    ...mapState(["user", "login"]),
+    userReview() {
+      if (this.reviews) {
+        return this.reviews.filter(
+          review => review.user_id === this.user.id
+        )[0];
+      }
+      return null;
+    },
+    notUserReview() {
+      if (this.reviews) {
+        return this.reviews.filter(review => review.user_id !== this.user.id);
+      }
+      return null;
+    }
   },
   created() {
     this.getProduct();
     this.getReviews();
-    this.getUserReview();
   }
 };
 </script>

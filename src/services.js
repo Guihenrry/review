@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const url = "https://reviewapi.guilhermehenrry.com.br/wp-json";
+
 const axiosInstance = axios.create({
-  baseURL: "http://localhost/reviewapi/wp-json/api/v1"
+  baseURL: url + "/api/v1"
 });
 
 axiosInstance.interceptors.request.use(
@@ -31,14 +33,9 @@ export const api = {
     return axiosInstance.delete(endPoint);
   },
   signIn(body) {
-    return axios.post(
-      "http://localhost/reviewapi/wp-json/jwt-auth/v1/token",
-      body
-    );
+    return axios.post(url + "/jwt-auth/v1/token", body);
   },
   validateToken() {
-    return axiosInstance.post(
-      "http://localhost/reviewapi/wp-json/jwt-auth/v1/token/validate "
-    );
+    return axiosInstance.post(url + "/jwt-auth/v1/token/validate ");
   }
 };

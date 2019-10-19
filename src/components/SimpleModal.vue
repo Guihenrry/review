@@ -38,6 +38,7 @@ export default {
   background: rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease;
   padding: 10px;
+  z-index: 500;
 }
 
 .modal-container {

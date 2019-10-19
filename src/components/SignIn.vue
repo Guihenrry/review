@@ -1,21 +1,26 @@
 <template>
-  <form>
-    <ErrorNotification :errors="errors" />
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" v-model="user.email" />
-    <label for="senha">Senha</label>
-    <input type="password" id="senha" name="senha" v-model="user.password" />
-    <p class>
-      Não tem uma conta?
-      <a @click="$emit('createAccount')">Crie uma!</a>
-    </p>
-    <button class="btn" @click.prevent="logar">Logar</button>
-  </form>
+  <div>
+    <PageLoading v-if="loading" />
+    <form v-show="!loading">
+      <ErrorNotification :errors="errors" />
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" v-model="user.email" />
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" v-model="user.password" />
+      <p>
+        Não tem uma conta?
+        <a @click="$emit('createAccount')">Crie uma!</a>
+      </p>
+      <p>
+        Perdeu a senha?
+        <a href>Clique aqui.</a>
+      </p>
+      <button class="btn" @click.prevent="logar">Logar</button>
+    </form>
+  </div>
 </template>
 
 <script>
-import SimpleModal from "@/components/SimpleModal.vue";
-
 export default {
   name: "SignIn",
   data() {
@@ -24,21 +29,23 @@ export default {
         email: "",
         password: ""
       },
-      errors: []
+      errors: [],
+      loading: false
     };
   },
   methods: {
-    logar() {
+    async logar() {
+      this.loading = true;
       this.errors = [];
 
-      this.$store
-        .dispatch("signIn", this.user)
-        .then(() => {
-          this.$store.dispatch("getUser");
-        })
-        .catch(error => {
-          this.errors.push(error.response.data.message);
-        });
+      try {
+        await this.$store.dispatch("signIn", this.user);
+        await this.$store.dispatch("getUser");
+      } catch (error) {
+        this.errors.push(error.response.data.message);
+      }
+
+      this.loading = false;
     }
   }
 };
@@ -59,6 +66,7 @@ export default {
 p {
   font-size: 0.875rem;
   color: #777777;
+  margin-bottom: 5px;
 }
 
 a {

@@ -13,6 +13,7 @@
 <script>
 import AdminAddProduct from "@/components/AdminAddProduct.vue";
 import AdminListProducts from "@/components/AdminListProducts.vue";
+import { mapState } from "vuex";
 import { api } from "@/services.js";
 
 export default {
@@ -35,6 +36,20 @@ export default {
   },
   created() {
     this.getProducts();
+    document.title = "Review | Admin";
+  },
+  computed: {
+    ...mapState(["login", "user"])
+  },
+  watch: {
+    login() {
+      if (!this.user.administrator) this.$router.push({ name: "home" });
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (!vm.user.administrator) vm.$router.push({ name: "home" });
+    });
   }
 };
 </script>

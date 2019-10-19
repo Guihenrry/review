@@ -55,7 +55,12 @@ export default {
   computed: {
     ...mapState(["login", "user"]),
     name() {
-      return this.$store.state.user.name.split(" ")[0];
+      let name = this.$store.state.user.name.split(" ")[0];
+      if (name.length >= 9) {
+        name = name.substr(0, 9) + "...";
+      }
+
+      return name;
     }
   },
   watch: {
