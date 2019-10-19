@@ -3,6 +3,7 @@ import Router from "vue-router";
 
 import Home from "@/views/Home.vue";
 import Product from "@/views/Product.vue";
+import Admin from "@/views/Admin.vue";
 
 Vue.use(Router);
 
@@ -20,6 +21,11 @@ export default new Router({
       name: "product",
       component: Product,
       props: true
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: Admin
     }
   ]
 });

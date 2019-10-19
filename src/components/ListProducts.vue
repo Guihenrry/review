@@ -1,12 +1,15 @@
 <template>
-  <ul v-if="products" class="produtos">
-    <li v-for="product in products" :key="product.id">
-      <router-link :to="{name: 'product', params: {id: product.id}}">
-        <img :src="product.src" :alt="product.name" />
-        <h2>{{product.name}}</h2>
-      </router-link>
-    </li>
-  </ul>
+  <section>
+    <ul v-if="products && products.length" class="produtos">
+      <li v-for="product in products" :key="product.id">
+        <router-link :to="{name: 'product', params: {id: product.id}}">
+          <img v-if="product.images" :src="product.images[0].src" :alt="product.name" />
+          <h2>{{product.name}}</h2>
+        </router-link>
+      </li>
+    </ul>
+    <p v-else>Busca sem resultados. Tente buscar outro termo</p>
+  </section>
 </template>
 
 <script>
@@ -93,5 +96,11 @@ h2 {
   padding: 10px 10px 20px 10px;
   font-size: 1.125rem;
   font-weight: 400;
+}
+
+p {
+  text-align: center;
+  color: #777777;
+  padding: 0 10px;
 }
 </style>

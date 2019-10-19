@@ -5,8 +5,9 @@
         <router-link class="logo" :to="{name: 'home'}">
           <img src="@/assets/review.png" alt="Review" />
         </router-link>
-        <div v-if="$store.state.login">
+        <div v-if="login">
           <span class="user-name">{{name}}</span>
+          <router-link v-if="user.administrator" class="btn" :to="{name: 'admin'}">Admin</router-link>
           <button class="btn" @click="$store.dispatch('signOut')">Sair</button>
         </div>
         <div v-else>
@@ -52,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["login"]),
+    ...mapState(["login", "user"]),
     name() {
       return this.$store.state.user.name.split(" ")[0];
     }
@@ -100,8 +101,11 @@ header {
   color: #0880ba;
 }
 
+.btn {
+  margin-left: 15px;
+}
+
 .user-name {
-  margin-right: 15px;
   color: #fff;
   font-size: 1.125rem;
 }

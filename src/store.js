@@ -13,7 +13,7 @@ export default new Vuex.Store({
       id: "",
       email: "",
       name: "",
-      password: ""
+      administrator: ""
     }
   },
   mutations: {
@@ -25,29 +25,38 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getUser(context, payload) {
-      return api.get(`/user/${payload}`).then(r => {
+    getUser(context) {
+      return api.get("/user").then(r => {
         context.commit("UPDATE_USER", r.data);
         context.commit("UPDATE_LOGIN", true);
       });
     },
     createUser(context, payload) {
-      context.commit("UPDATE_USER", {
-        id: payload.email,
+      return api.post("/user", {
         email: payload.email,
         name: payload.name,
         password: payload.password
       });
-      return api.post("/user", context.state.user);
+    },
+    signIn(context, payload) {
+      return api
+        .signIn({
+          username: payload.email,
+          password: payload.password
+        })
+        .then(r => {
+          window.localStorage.token = `Bearer ${r.data.token}`;
+        });
     },
     signOut(context) {
       context.commit("UPDATE_USER", {
         id: "",
         email: "",
         name: "",
-        password: ""
+        administrator: ""
       });
       context.commit("UPDATE_LOGIN", false);
+      window.localStorage.removeItem("token");
     }
   }
 });

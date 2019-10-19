@@ -1,7 +1,7 @@
 <template>
   <div class="produto">
     <section class="produto-info">
-      <img :src="product.src" :alt="product.name" />
+      <img v-if="product.images" :src="product.images[0].src" :alt="product.name" />
       <div>
         <h1>{{product.name}}</h1>
         <transition mode="out-in">
@@ -119,7 +119,7 @@ export default {
 .produto-info h1 {
   font-size: 3rem;
   font-weight: 400;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .btn {

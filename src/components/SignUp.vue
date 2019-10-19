@@ -1,5 +1,6 @@
 <template>
   <form>
+    <ErrorNotification :errors="errors" />
     <label for="nome">Nome</label>
     <input type="text" id="nome" name="nome" v-model="user.name" />
     <label for="email">Email</label>
@@ -27,19 +28,20 @@ export default {
         name: "",
         email: "",
         password: ""
-      }
+      },
+      errors: []
     };
   },
   methods: {
-    createUser() {
-      this.$store
-        .dispatch("createUser", this.user)
-        .then(() => {
-          this.$store.dispatch("getUser", this.user.email);
-        })
-        .catch(error => {
-          console.log(error.response);
-        });
+    async createUser() {
+      this.errors = [];
+      try {
+        await this.$store.dispatch("createUser", this.user);
+        await this.$store.dispatch("signIn", this.user);
+        await this.$store.dispatch("getUser");
+      } catch (error) {
+        this.errors.push(error.response.data.message);
+      }
     }
   }
 };

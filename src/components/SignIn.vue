@@ -1,5 +1,6 @@
 <template>
   <form>
+    <ErrorNotification :errors="errors" />
     <label for="email">Email</label>
     <input type="email" id="email" name="email" v-model="user.email" />
     <label for="senha">Senha</label>
@@ -22,16 +23,21 @@ export default {
       user: {
         email: "",
         password: ""
-      }
+      },
+      errors: []
     };
   },
   methods: {
     logar() {
+      this.errors = [];
+
       this.$store
-        .dispatch("getUser", this.user.email)
-        .then(() => {})
+        .dispatch("signIn", this.user)
+        .then(() => {
+          this.$store.dispatch("getUser");
+        })
         .catch(error => {
-          console.log(error.response);
+          this.errors.push(error.response.data.message);
         });
     }
   }
@@ -58,5 +64,9 @@ p {
 a {
   color: #0880ba;
   cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <form id="form-review">
+    <ErrorNotification :errors="errors" />
     <label for="title">Em uma frase resuma sua review</label>
     <input type="text" name="title" id="title" v-model="title" />
     <label for="text">Conte-nos o que você achou do produto</label>
@@ -19,7 +20,8 @@ export default {
   data() {
     return {
       title: "",
-      text: ""
+      text: "",
+      errors: []
     };
   },
   computed: {
@@ -35,16 +37,28 @@ export default {
   },
   methods: {
     addReview() {
-      api.post("/review", this.review).then(() => {
-        this.$emit("closeForm");
-        this.$emit("getUserReview");
-      });
+      this.errors = [];
+      api
+        .post("/review", this.review)
+        .then(() => {
+          this.$emit("closeForm");
+          this.$emit("getUserReview");
+        })
+        .catch(error => {
+          this.errors.push(error.response.data.message);
+        });
     },
     updateReview() {
-      api.put(`/review/${this.userReview.id}`, this.review).then(() => {
-        this.$emit("closeForm");
-        this.$emit("getUserReview");
-      });
+      this.errors = [];
+      api
+        .put(`/review/${this.userReview.id}`, this.review)
+        .then(() => {
+          this.$emit("closeForm");
+          this.$emit("getUserReview");
+        })
+        .catch(error => {
+          this.errors.push(error.response.data.message);
+        });
     }
   },
   created() {
