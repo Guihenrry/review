@@ -65,6 +65,7 @@ export default {
 
 @media screen and (max-width: 650px) {
   .produtos {
+    margin: 30px auto;
     grid-template-columns: 1fr 1fr;
   }
 }

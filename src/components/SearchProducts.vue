@@ -31,10 +31,17 @@ form {
   display: grid;
 }
 
+@media screen and (max-width: 650px) {
+  form {
+    margin: 30px auto;
+  }
+}
+
 #busca {
   width: 100%;
   grid-area: 1/1;
   padding-right: 40px;
+  margin: 0;
 }
 
 #lupa {
@@ -45,5 +52,6 @@ form {
   text-indent: -150px;
   background: transparent url("../assets/search.svg") no-repeat center center;
   border: none;
+  margin: 0;
 }
 </style>
