@@ -13,7 +13,10 @@
       </p>
       <p>
         Perdeu a senha?
-        <a href>Clique aqui.</a>
+        <a
+          href="https://reviewapi.guilhermehenrry.com.br/wp-login.php?action=lostpassword"
+          target="_blank"
+        >Clique aqui.</a>
       </p>
       <button class="btn" @click.prevent="logar">Logar</button>
     </form>

@@ -76,6 +76,7 @@ export default {
 
 @media screen and (max-width: 600px) {
   .container {
+    padding: 30px 10px;
     grid-template-columns: 1fr;
   }
 

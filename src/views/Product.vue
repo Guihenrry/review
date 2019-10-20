@@ -121,8 +121,12 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 60px;
+  grid-gap: 30px;
 }
 @media screen and (max-width: 650px) {
+  .produto {
+    padding: 30px 10px;
+  }
   .produto-info {
     grid-template-columns: 1fr;
   }

@@ -89,7 +89,7 @@ header {
   align-items: center;
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 450px) {
   .container {
     flex-direction: column;
   }

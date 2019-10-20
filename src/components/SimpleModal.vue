@@ -39,13 +39,14 @@ export default {
   transition: opacity 0.3s ease;
   padding: 10px;
   z-index: 500;
+  overflow-y: scroll;
 }
 
 .modal-container {
   position: relative;
   background: #fff;
   max-width: 500px;
-  margin: 60px auto;
+  margin: 3% auto;
   padding: 30px;
   transition: all 0.3s ease;
 }
